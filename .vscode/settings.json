@@ -1,0 +1,7 @@
+{
+    "search.useIgnoreFiles": false,
+    "php.validate.enable": false,
+    "docker-linter.php.enable": true,
+    "docker-linter.php.container": "dockerlaravelblog_app_1",
+    "docker-linter.php.machine": ""
+}
