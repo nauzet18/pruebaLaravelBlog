@@ -18,3 +18,4 @@ yarn-error.log
 public/.well-known/
 /dockerlaravelblog/.env
 /dockerlaravelblog/datosClipboard.txt
+.php-cs-fixer.cache
