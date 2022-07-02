@@ -1,0 +1,188 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "L5 OpenApi",
+        "description": "L5 Swagger OpenApi description",
+        "contact": {
+            "email": "julio.yanez@codigoxules.org"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0",
+        "x-logo": {
+            "url": "https://via.placeholder.com/190x90.png?text=L5-Swagger"
+        }
+    },
+    "paths": {
+        "/api/posts": {
+            "get": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Mostrar el listado de posts",
+                "description": "Display a listing of the resource.",
+                "operationId": "3fda362e2e082b5357ac416e7767e435",
+                "responses": {
+                    "200": {
+                        "description": "Mostrar todas los posts."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Crear un posts",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "dcb66200c3132996151884ac232cf439",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "userId": {
+                                        "oneOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            }
+                                        ]
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "body": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "userId": "10",
+                                    "title": "Una piedra en el camino",
+                                    "body": "Esto debería ser una historia..."
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Creado el posts."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        },
+        "/api/posts/{id}": {
+            "get": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Muestra un post con la información del autor",
+                "description": "Display the specified resource.",
+                "operationId": "142b5adb0520cca80cedfe09d9298332",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "El identificador de un post existente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Muestra un post y la información del autor."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Update a post",
+                "description": "Update the specified resource in storage.",
+                "operationId": "650f4bed0846d9350903d8a17c7b503a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "El identificador de un post existente",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "An int value.",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "userId": {
+                                        "oneOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "integer"
+                                            }
+                                        ]
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "maxLength": 255
+                                    },
+                                    "body": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "userId": "10",
+                                    "title": "Una piedra en el camino",
+                                    "body": "Esto debería ser una historia..."
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Actualiza un post."
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    }
+                }
+            }
+        }
+    }
+}
