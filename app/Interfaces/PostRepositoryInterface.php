@@ -27,24 +27,23 @@ interface PostRepositoryInterface
     /**
      * Create
      *
-     * @param   \App\Http\Requests\PostRequest    $request
-     * @param   integer                           $id
+     * @param   array    $data
      *
      * @method  POST    api/posts       For Create
      * @access  public
      */
-    public function create(PostRequest $request);
+    public function create(array $data): array;
 
     /**
      * Update post
      *
-     * @param   \App\Http\Requests\PostRequest    $request
-     * @param   integer                           $id
+     * @param   integer  $id
+     * @param   array    $data
      *
      * @method  PUT     api/posts/{id}  For Update
      * @access  public
      */
-    public function update(PostRequest $request, int $id);
+    public function update(int $id, array $data);
 
     /**
      * Delete post

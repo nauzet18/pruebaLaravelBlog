@@ -7,6 +7,10 @@ use Illuminate\Support\ServiceProvider;
 use App\Interfaces\PostRepositoryInterface;
 use App\Repositories\PostRepository;
 
+use App\Interfaces\PersistenceServiceInterface;
+use App\Services\PersistenceServiceInMemory;
+
+
 class RepositoryServiceProvider extends ServiceProvider
 {
     /**
@@ -17,6 +21,8 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind( PostRepositoryInterface::class, PostRepository::class);
+
+        $this->app->bind( PersistenceServiceInterface::class, PersistenceServiceInMemory::class);
     }
 
     /**

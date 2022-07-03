@@ -4,9 +4,17 @@ namespace App\Repositories;
 
 use App\Http\Requests\PostRequest;
 use App\Interfaces\PostRepositoryInterface;
+use App\Interfaces\PersistenceServiceInterface;
 
 class PostRepository implements PostRepositoryInterface
 {
+    private PersistenceServiceInterface $persistence;
+
+    public function __construct(PersistenceServiceInterface $persistence)
+    {
+      $this->persistence = $persistence;
+    }
+
     /**
      * Get all posts
      *
@@ -16,14 +24,13 @@ class PostRepository implements PostRepositoryInterface
     public function getAll()
     {
       try {
-        //TODO: quitar el factory
         //TODO :  Endpoint GET para la obtención de posts (y en cada post incluir la información del autor)
-        $posts = \App\Factories\PostFactory::new()->times(5)->make();
+        $posts = $this->persistence->all();
 
         return $posts;
 
       } catch(\Exception $e) {
-        return $this->error($e->getMessage(), $e->getCode());
+          throw  $e;
       }
 
     }
@@ -39,45 +46,69 @@ class PostRepository implements PostRepositoryInterface
     public function get(int $id)
     {
         try {
-            //TODO: quitar el factory
-            $post = \App\Factories\PostFactory::new()->make();
+            $post = $this->persistence->retrieve( $id );
 
-            // Check the post
-            if(!$post) return $this->error("No post with ID $id", 404);
+            if(!$post)
+                throw new OutOfBoundsException("No post found for ID  $id");
 
             return $post;
 
         } catch(\Exception $e) {
-            return $this->error($e->getMessage(), $e->getCode());
+            throw  $e;
         }
     }
 
     /**
      * Create
      *
-     * @param   \App\Http\Requests\PostRequest    $request
-     * @param   integer                           $id
+     * @param   array    $data
      *
      * @method  POST    api/posts       For Create
      * @access  public
      */
-    public function create(PostRequest $request)
+    public function create(array $data): array
     {
-      //TOD
+        //DB::beginTransaction();
+        try {
+            $post = $this->persistence->persist( $data );
+
+            if(!$post)
+              throw new Exception("No created post");
+
+            //DB::commit();
+            return $post;
+
+        } catch(\Exception $e) {
+            //DB::rollBack();
+            throw  $e;
+        }
     }
 
     /**
      * Update post
      *
-     * @param   \App\Http\Requests\PostRequest    $request
-     * @param   integer                           $id
+     * @param   integer  $id
+     * @param   array    $data
      *
      * @method  PUT     api/posts/{id}  For Update
      * @access  public
      */
-    public function update(PostRequest $request, int $id)
+    public function update(int $id, array $data)
     {
-      //TOD
+        //DB::beginTransaction();
+        try {
+            $post = $this->persistence->update( $id, $data );
+
+            if(!$post)
+                throw new OutOfBoundsException("No post found for ID  $id");
+
+            //DB::commit();
+            return $post;
+
+        } catch(\Exception $e) {
+            //DB::rollBack();
+            throw  $e;
+        }
     }
 
 
@@ -93,21 +124,14 @@ class PostRepository implements PostRepositoryInterface
     {
         //DB::beginTransaction();
         try {
-            //TODO: quitar el factory
-            $post = \App\Factories\PostFactory::new()->make();
-
-            // Check the post
-            if(!$post) return $this->error("No post with ID $id", 404);
-
-            // Delete the post
-            $post->delete();
+            $this->persistence->delete($id);
 
             //DB::commit();
-            return $post;
+            return;
 
         } catch(\Exception $e) {
             //DB::rollBack();
-            return $this->error($e->getMessage(), $e->getCode());
+            throw  $e;
         }
     }
 }
