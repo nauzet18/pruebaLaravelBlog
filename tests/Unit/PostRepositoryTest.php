@@ -4,14 +4,11 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 
-use App\Interfaces\PostRepositoryInterface;
 use App\Repositories\PostRepository;
 use App\Services\PersistenceServiceInMemory;
 
 class PostRepositoryTest extends TestCase
 {
-    private PostRepositoryInterface $repository;
-
     protected function setUp(): void
     {
         parent::setUp();

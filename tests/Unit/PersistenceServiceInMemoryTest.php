@@ -4,13 +4,10 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 
-use App\Interfaces\PersistenceServiceInterface;
 use App\Services\PersistenceServiceInMemory;
 
 class PersistenceServiceInMemoryTest extends TestCase
 {
-    private PersistenceServiceInterface $persistence;
-
     protected function setUp(): void
     {
         parent::setUp();
