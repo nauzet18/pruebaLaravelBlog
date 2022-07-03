@@ -7,7 +7,7 @@ use Tests\TestCase;
 use App\Services\PersistenceServiceInMemory;
 use App\Repositories\PostRepository;
 
-class ApiPostsTest extends TestCase
+class ApiPostsWithPersistenceServiceInMemoryTest extends TestCase
 {
     protected function setUp(): void
     {
