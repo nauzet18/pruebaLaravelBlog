@@ -24,7 +24,9 @@ abstract class ApiFactory extends Factory
         if ($instances instanceof Collection) {
             return $instances->map(function ($instance) {
                 return $this->resolveFactoryInstance($instance);
-            })->toArray();
+            })
+            //->toArray() //Te odio... por q coño pasas esto a array, cargandote como necesita iterar con un collection ResourceCollection
+            ;
         }
 
         return $this->resolveFactoryInstance($instances);

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\PostRequest;
 use App\Interfaces\PostRepositoryInterface;
+use App\Http\Resources\PostResource;
+use App\Http\Resources\PostCollection;
 
 /**
  * @OA\Info(
@@ -58,15 +60,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //TODO :  Endpoint GET para la obtención de posts (y en cada post incluir la información del autor)
+        $posts = $this->postRepository->getAll();
 
-        $posts = \App\Factories\PostFactory::new()->times(5)->make();
-
-        //TODO: quitar el factory
-
-        return response()->json([
-            'data' => $posts
-        ]);
+        return new PostCollection($posts);
     }
 
     /**
@@ -153,13 +149,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = \App\Factories\PostFactory::new()->make();
+        $post = $this->postRepository->get($id);
 
-        //TODO: quitar el factory
-
-        return response()->json([
-            'data' => $post
-        ]);
+        return new PostResource($post);
     }
 
     /**
