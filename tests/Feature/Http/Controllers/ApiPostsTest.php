@@ -4,8 +4,28 @@ namespace Tests\Feature\Http\Controllers;
 
 use Tests\TestCase;
 
+use App\Services\PersistenceServiceInMemory;
+use App\Repositories\PostRepository;
+
 class ApiPostsTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->app->instance(PersistenceServiceInMemory::class, new PersistenceServiceInMemory());
+
+        $this->repository = $this->app->make(PostRepository::class);
+        $this->itemsFake = \App\Factories\PostFactory::new()->times(5)->make();
+
+        foreach ($this->itemsFake as $item) {
+            $data =  $item->toArray();
+            unset($data['id']);
+
+            $this->repository->create($data);
+        }
+    }
+
     public function test_get_all_posts()
     {
         $response = $this->get('/api/posts');
@@ -25,7 +45,9 @@ class ApiPostsTest extends TestCase
 
     public function test_get_a_post()
     {
-        $response = $this->get('/api/posts/1');
+        $firstPost = collect ($this->repository->getAll())->first();
+
+        $response = $this->get('/api/posts/'.$firstPost['id']);
         $response->assertStatus(200)
                  ->assertJsonStructure([
                     'data' => [
