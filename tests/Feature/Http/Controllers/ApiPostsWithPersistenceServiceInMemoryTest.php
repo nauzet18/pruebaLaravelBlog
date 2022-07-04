@@ -24,6 +24,7 @@ class ApiPostsWithPersistenceServiceInMemoryTest extends TestCase
 
             $this->repository->create($data);
         }
+        $this->itemFake = $this->itemsFake->first()->toArray();
     }
 
     public function test_get_all_posts()
@@ -60,4 +61,22 @@ class ApiPostsWithPersistenceServiceInMemoryTest extends TestCase
                  ;
     }
 
+    public function test_post_a_post()
+    {
+        $itemFake =  $this->itemFake;
+        unset($itemFake['id']);
+
+        $response = $this->post('/api/posts', $this->itemFake);
+        $response->assertStatus(200)
+                 ->assertJsonStructure([
+                    'data' => [
+                                'id',
+                                'userId',
+                                'title',
+                                'body',
+                    ]
+                 ])
+                 ->assertJsonFragment( $itemFake )
+                 ;
+    }
 }
