@@ -13,7 +13,9 @@ class PostRepositoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->repository = $this->app->make(PostRepository::class, [new PersistenceServiceInMemory()]);
+        $this->app->instance(PersistenceServiceInMemory::class, new PersistenceServiceInMemory());
+
+        $this->repository = $this->app->make(PostRepository::class);
         $this->itemsFake = \App\Factories\PostFactory::new()->times(5)->make();
     }
 

@@ -9,6 +9,7 @@ use App\Repositories\PostRepository;
 
 use App\Interfaces\PersistenceServiceInterface;
 use App\Services\PersistenceServiceInMemory;
+use App\Services\PersistenceServiceApi;
 
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -22,7 +23,12 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind( PostRepositoryInterface::class, PostRepository::class);
 
-        $this->app->bind( PersistenceServiceInterface::class, PersistenceServiceInMemory::class);
+        //Para los test, uso el de PersistenceServiceInMemory (esto no haría falta, si consigo usar los Mock en los test)
+        if($this->app->runningUnitTests()) {
+           $this->app->bind( PersistenceServiceInterface::class, PersistenceServiceInMemory::class);
+        } else {
+           $this->app->bind( PersistenceServiceInterface::class, PersistenceServiceApi::class);
+        }
     }
 
     /**

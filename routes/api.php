@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('posts', App\Http\Controllers\Api\PostController::class);
+Route::apiResource('posts', App\Http\Controllers\Api\PostController::class);

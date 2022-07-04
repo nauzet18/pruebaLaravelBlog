@@ -4,7 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use Tests\TestCase;
 
-use App\Services\PersistenceServiceInMemory;
+use App\Services\PersistenceServiceApi;
 use App\Repositories\PostRepository;
 
 class ApiPostsWithPersistenceServiceApiTest extends TestCase
@@ -12,22 +12,15 @@ class ApiPostsWithPersistenceServiceApiTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->app->instance(PersistenceServiceInMemory::class, new PersistenceServiceInMemory());
-
-        $this->repository = $this->app->make(PostRepository::class);
-        $this->itemsFake = \App\Factories\PostFactory::new()->times(5)->make();
-
-        foreach ($this->itemsFake as $item) {
-            $data =  $item->toArray();
-            unset($data['id']);
-
-            $this->repository->create($data);
-        }
+        //NOTA: Tengo q ver como hacer para q se instancie  PersistenceServiceApi en vez de PersistenceServiceInMemory
+        // para eso tengo q ver como hacerlo, pero sospecho q  con mockery (pero se me resiste)
     }
 
     public function test_get_all_posts()
     {
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
         $response = $this->get('/api/posts');
         $response->assertStatus(200)
                  ->assertJsonStructure([
@@ -45,9 +38,10 @@ class ApiPostsWithPersistenceServiceApiTest extends TestCase
 
     public function test_get_a_post()
     {
-        $firstPost = collect ($this->repository->getAll())->first();
-
-        $response = $this->get('/api/posts/'.$firstPost['id']);
+        $this->markTestIncomplete(
+          'This test has not been implemented yet.'
+        );
+        $response = $this->get('/api/posts/1');
         $response->assertStatus(200)
                  ->assertJsonStructure([
                     'data' => [

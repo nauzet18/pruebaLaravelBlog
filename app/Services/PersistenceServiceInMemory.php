@@ -10,7 +10,7 @@ class PersistenceServiceInMemory implements PersistenceServiceInterface
     private array $data = [];
     private int $lastId = 0;
 
-    public function generateId(): int
+    private function generateId(): int
     {
         $this->lastId++;
 

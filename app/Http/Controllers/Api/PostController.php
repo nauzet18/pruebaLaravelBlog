@@ -113,8 +113,9 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        // TODO: Endpoint POST para la publicación de un post.
-        //  https://laravel.com/docs/9.x/validation#creating-form-requests
+        $post = $this->postRepository->create( $request->all() );
+
+        return new PostResource($post);
     }
 
     /**
