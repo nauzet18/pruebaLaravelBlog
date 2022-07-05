@@ -17,6 +17,24 @@ class PersistenceServiceInMemory implements PersistenceServiceInterface
         return $this->lastId;
     }
 
+    public function getUser($id): array
+    {
+        $item = collect($this->data)->first(function ($item, $key) use($id) {
+            return $item['userId']== $id;
+        });
+
+        if( isset($item['user']))
+            $user = $item['user'];
+        else
+            $user = null;
+
+        if (empty($user)) {
+            throw new OutOfBoundsException("No user data found for ID  $id");
+        }
+
+        return $user;
+    }
+
     public function all(): array
     {
         return $this->data;

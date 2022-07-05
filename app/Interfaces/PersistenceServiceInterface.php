@@ -4,6 +4,8 @@ namespace App\Interfaces;
 
 interface PersistenceServiceInterface
 {
+    public function getUser($id): array;
+
     public function all(): array;
 
     public function persist(array $data): array;

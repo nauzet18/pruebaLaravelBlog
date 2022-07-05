@@ -9,10 +9,13 @@ interface PostRepositoryInterface
     /**
      * Get all posts
      *
+     * @param   integer     $perPage ?
+     * @param   integer     $page ?
+     *
      * @method  GET api/posts
      * @access  public
      */
-     public function getAll();
+     public function getAll(int $perPage = null,int $page = null): array;
 
     /**
      * Get Post By ID
@@ -22,7 +25,7 @@ interface PostRepositoryInterface
      * @method  GET api/posts/{id}
      * @access  public
      */
-    public function get(int $id);
+    public function get(int $id): array;
 
     /**
      * Create

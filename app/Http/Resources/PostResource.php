@@ -26,6 +26,7 @@ class PostResource extends JsonResource
             'userId'=> $resource->userId,
             'title'=> $resource->title,
             'body'=> $resource->body,
+            'user'=> $resource->user,
         ];
     }
 }

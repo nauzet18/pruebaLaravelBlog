@@ -16,9 +16,23 @@ class PersistenceServiceApi implements PersistenceServiceInterface
         $this->urlBase = config('persistence_service_api.url_base', false);
     }
 
+    public function getUser($id): array
+    {
+        $response = Http::get($this->urlBase.'/users/'.$id);
+        $user = $response->json();
+
+        if (empty($user)) {
+            throw new OutOfBoundsException("No user data found for ID  $id");
+        }
+
+        return $user;
+    }
+
     public function all(): array
     {
         $response = Http::get($this->urlBase.'/posts');
+
+        $elements = $response->json();
 
         return $response->json();
     }
@@ -33,11 +47,10 @@ class PersistenceServiceApi implements PersistenceServiceInterface
     public function retrieve(int $id): array
     {
         $response = Http::get($this->urlBase.'/posts/'.$id);
-        $element = $response->json();
 
-        if (empty($element)) {
-            throw new OutOfBoundsException("No data found for ID  $id");
-        }
+        $element = $response->json();
+        if(empty($element))
+            throw new \OutOfBoundsException("No post found for ID  $id");
 
         return $element;
     }

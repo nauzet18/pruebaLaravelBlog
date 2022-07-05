@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.min-h-screen {
+   min-height: 100vh;
+}
+
+.menu-link {
+    @apply text-xl;
+}
+
+.menu-link:hover {
+    @apply text-xl text-white;
+}
+
+.menu-link.active {
+    @apply text-xl italic;
+}
+
+
+.post-link:hover {
+    @apply text-gray-500;
+}

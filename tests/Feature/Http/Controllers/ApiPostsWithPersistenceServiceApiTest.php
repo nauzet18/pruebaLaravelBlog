@@ -44,6 +44,7 @@ class ApiPostsWithPersistenceServiceApiTest extends TestCase
                              'userId',
                              'title',
                              'body',
+                             'user' ,
                         ]
                     ]
                  ])
@@ -60,6 +61,7 @@ class ApiPostsWithPersistenceServiceApiTest extends TestCase
                                 'userId',
                                 'title',
                                 'body',
+                                'user' ,
                     ]
                  ])
                  ;

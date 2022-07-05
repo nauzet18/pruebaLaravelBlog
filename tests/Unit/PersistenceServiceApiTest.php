@@ -46,6 +46,7 @@ class PersistenceServiceApiTest extends TestCase
     {
         Http::fake([
           'https://jsonplaceholder.typicode.com/posts' => Http::response($this->itemsFake->toArray(), 200),
+          'https://jsonplaceholder.typicode.com/users/*' => Http::response( $this->itemFake['user'] , 200 ),
         ]);
 
         $this->assertEquals(array_values($this->itemsFake->toArray()), array_values( $this->persistence->all() ));
@@ -60,6 +61,7 @@ class PersistenceServiceApiTest extends TestCase
     {
         Http::fake([
           'https://jsonplaceholder.typicode.com/posts/'.$this->itemFake['id'] => Http::response( $this->itemFake , 200 ),
+          'https://jsonplaceholder.typicode.com/users/*' => Http::response( $this->itemFake['user'] , 200 ),
         ]);
 
         $this->assertEquals($this->itemFake, $this->persistence->retrieve($this->itemFake['id']));
