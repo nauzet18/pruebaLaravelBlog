@@ -11,25 +11,31 @@
 En el repo está la carpeta **dockerlaravelblog** solo es entar en ella y lanzar los comandos de **docker-compose** que se indican en el proceso de instalación.
 
 0º Pues a contruir y a levantar
+
 **docker-compose build**
 
 **docker-compose up**
 
 1º Instalar los paquetes de composer
+
 **docker-compose exec -u1000 app composer install**
 
 2º generar el app key
+
 **docker-compose exec -u1000 app php artisan key:generate**
 
 3º Ejecutar migraciones y seeders (No lo uso al final)
+
 **docker-compose exec -u1000 app php artisan migrate**
 
 **docker-compose exec -u1000 app php artisan db:seed**
 
 4º crear el link a la carpeta storage
+
 **docker-compose exec -u1000 app php artisan storage:link**
 
 5º Instalar paquetes de nodemodules
+
 **docker-compose run --rm -u1000 nodejs npm install**
 
 
