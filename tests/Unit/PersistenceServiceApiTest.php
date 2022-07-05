@@ -2,10 +2,9 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Illuminate\Support\Facades\Http;
-
 use App\Services\PersistenceServiceApi;
+use Illuminate\Support\Facades\Http;
+use Tests\TestCase;
 
 class PersistenceServiceApiTest extends TestCase
 {
@@ -23,13 +22,13 @@ class PersistenceServiceApiTest extends TestCase
      *
      * @return void
      */
-    public function test_create_a_element()
+    public function testCreateAElement()
     {
         Http::fake([
           'https://jsonplaceholder.typicode.com/posts' => Http::response($this->itemFake, 200),
         ]);
 
-        $data =  $this->itemFake;
+        $data = $this->itemFake;
         unset($data['id']);
 
         $element = $this->persistence->persist($data);
@@ -42,14 +41,14 @@ class PersistenceServiceApiTest extends TestCase
      *
      * @return void
      */
-    public function test_get_all_element()
+    public function testGetAllElement()
     {
         Http::fake([
           'https://jsonplaceholder.typicode.com/posts' => Http::response($this->itemsFake->toArray(), 200),
-          'https://jsonplaceholder.typicode.com/users/*' => Http::response( $this->itemFake['user'] , 200 ),
+          'https://jsonplaceholder.typicode.com/users/*' => Http::response($this->itemFake['user'], 200),
         ]);
 
-        $this->assertEquals(array_values($this->itemsFake->toArray()), array_values( $this->persistence->all() ));
+        $this->assertEquals(array_values($this->itemsFake->toArray()), array_values($this->persistence->all()));
     }
 
     /**
@@ -57,46 +56,45 @@ class PersistenceServiceApiTest extends TestCase
      *
      * @return void
      */
-    public function test_get_a_element()
+    public function testGetAElement()
     {
         Http::fake([
-          'https://jsonplaceholder.typicode.com/posts/'.$this->itemFake['id'] => Http::response( $this->itemFake , 200 ),
-          'https://jsonplaceholder.typicode.com/users/*' => Http::response( $this->itemFake['user'] , 200 ),
+          'https://jsonplaceholder.typicode.com/posts/'.$this->itemFake['id'] => Http::response($this->itemFake, 200),
+          'https://jsonplaceholder.typicode.com/users/*' => Http::response($this->itemFake['user'], 200),
         ]);
 
         $this->assertEquals($this->itemFake, $this->persistence->retrieve($this->itemFake['id']));
     }
-
 
     /**
      * A test for update a element in persistence.
      *
      * @return void
      */
-    public function test_update_a_element()
+    public function testUpdateAElement()
     {
         $this->markTestIncomplete(
           'This test has not been implemented yet.'
         );
 
-        $element = $this->persistence->persist($this->itemsFake->last()->toArray() );
+        $element = $this->persistence->persist($this->itemsFake->last()->toArray());
         $element['title'] = 'Nauzet';
 
-        $this->assertEquals($element, $this->persistence->update($element['id'], $element) );
+        $this->assertEquals($element, $this->persistence->update($element['id'], $element));
     }
 
     /**
-     * A test for not update a element in persistence because thow OutOfBoundsException
+     * A test for not update a element in persistence because thow OutOfBoundsException.
      *
      * @return void
      */
-    public function test_not_update_a_element()
+    public function testNotUpdateAElement()
     {
         $this->markTestIncomplete(
           'This test has not been implemented yet.'
         );
 
-        $element = $this->persistence->persist($this->itemsFake->last()->toArray() );
+        $element = $this->persistence->persist($this->itemsFake->last()->toArray());
         $idNoExist = ++$element['id'];
 
         $this->expectException(\OutOfBoundsException::class);
@@ -108,7 +106,7 @@ class PersistenceServiceApiTest extends TestCase
      *
      * @return void
      */
-    public function test_delete_a_element()
+    public function testDeleteAElement()
     {
         $this->markTestIncomplete(
           'This test has not been implemented yet.'
@@ -116,7 +114,7 @@ class PersistenceServiceApiTest extends TestCase
 
         $elements = [];
         foreach ($this->itemsFake as $item) {
-            $data =  $item->toArray();
+            $data = $item->toArray();
             unset($data['id']);
 
             $elements[] = $this->persistence->persist($data);
@@ -126,21 +124,21 @@ class PersistenceServiceApiTest extends TestCase
 
         unset($elements[0]);
 
-        $this->assertEquals(array_values($elements), array_values( $this->persistence->all() ));
+        $this->assertEquals(array_values($elements), array_values($this->persistence->all()));
     }
 
     /**
-     * A test for not delete a element in persistence because thow OutOfBoundsException
+     * A test for not delete a element in persistence because thow OutOfBoundsException.
      *
      * @return void
      */
-    public function test_not_delete_a_element()
+    public function testNotDeleteAElement()
     {
         $this->markTestIncomplete(
           'This test has not been implemented yet.'
         );
 
-        $element = $this->persistence->persist($this->itemsFake->last()->toArray() );
+        $element = $this->persistence->persist($this->itemsFake->last()->toArray());
         $idNoExist = ++$element['id'];
 
         $this->expectException(\OutOfBoundsException::class);

@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use \Illuminate\View\View;
-use \Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
-
 use App\Interfaces\PostRepositoryInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
@@ -32,13 +30,12 @@ class PostController extends Controller
 
             $posts = $this->postRepository->getAll($perPage, $page);
 
-            //En las vistas añado un paginador
-            //TODO: me gustaría hacer q el postRepository, devolviera Collection en vez de array, pero para otra.
+            // En las vistas añado un paginador
+            // TODO: me gustaría hacer q el postRepository, devolviera Collection en vez de array, pero para otra.
             $posts = $posts instanceof Collection ? $posts : Collection::make($posts);
-            $posts =  new LengthAwarePaginator($posts->forPage($page, $perPage), $posts->count(), $perPage, $page);
-        }
-        catch (\Exception $e) {
-            abort(404, 'Upss !!!' . $e->getMessage());
+            $posts = new LengthAwarePaginator($posts->forPage($page, $perPage), $posts->count(), $perPage, $page);
+        } catch (\Exception $e) {
+            abort(404, 'Upss !!!'.$e->getMessage());
         }
 
         return view('posts.index', compact('posts'));
@@ -47,16 +44,14 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  integer  $id
      * @return \Illuminate\View\View
      */
     public function show(int $id): View
     {
         try {
             $post = $this->postRepository->get($id);
-        }
-        catch (\Exception $e) {
-            abort(404, 'Upss !!!' . $e->getMessage());
+        } catch (\Exception $e) {
+            abort(404, 'Upss !!!'.$e->getMessage());
         }
 
         return view('posts.show', compact('post'));

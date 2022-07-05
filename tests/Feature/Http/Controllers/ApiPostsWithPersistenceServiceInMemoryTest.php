@@ -2,10 +2,9 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Tests\TestCase;
-
-use App\Services\PersistenceServiceInMemory;
 use App\Repositories\PostRepository;
+use App\Services\PersistenceServiceInMemory;
+use Tests\TestCase;
 
 class ApiPostsWithPersistenceServiceInMemoryTest extends TestCase
 {
@@ -19,7 +18,7 @@ class ApiPostsWithPersistenceServiceInMemoryTest extends TestCase
         $this->itemsFake = \App\Factories\PostFactory::new()->times(5)->make();
 
         foreach ($this->itemsFake as $item) {
-            $data =  $item->toArray();
+            $data = $item->toArray();
             unset($data['id']);
 
             $this->repository->create($data);
@@ -27,7 +26,7 @@ class ApiPostsWithPersistenceServiceInMemoryTest extends TestCase
         $this->itemFake = $this->itemsFake->first()->toArray();
     }
 
-    public function test_get_all_posts()
+    public function testGetAllPosts()
     {
         $response = $this->get('/api/posts');
         $response->assertStatus(200)
@@ -38,15 +37,15 @@ class ApiPostsWithPersistenceServiceInMemoryTest extends TestCase
                              'userId',
                              'title',
                              'body',
-                        ]
-                    ]
+                        ],
+                    ],
                  ])
                  ;
     }
 
-    public function test_get_a_post()
+    public function testGetAPost()
     {
-        $firstPost = collect ($this->repository->getAll())->first();
+        $firstPost = collect($this->repository->getAll())->first();
 
         $response = $this->get('/api/posts/'.$firstPost['id']);
         $response->assertStatus(200)
@@ -56,14 +55,14 @@ class ApiPostsWithPersistenceServiceInMemoryTest extends TestCase
                                 'userId',
                                 'title',
                                 'body',
-                    ]
+                    ],
                  ])
                  ;
     }
 
-    public function test_post_a_post()
+    public function testPostAPost()
     {
-        $itemFake =  $this->itemFake;
+        $itemFake = $this->itemFake;
         unset($itemFake['id']);
 
         $response = $this->post('/api/posts', $this->itemFake);
@@ -74,9 +73,9 @@ class ApiPostsWithPersistenceServiceInMemoryTest extends TestCase
                                 'userId',
                                 'title',
                                 'body',
-                    ]
+                    ],
                  ])
-                 ->assertJsonFragment( $itemFake )
+                 ->assertJsonFragment($itemFake)
                  ;
     }
 }

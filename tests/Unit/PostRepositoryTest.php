@@ -2,10 +2,9 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-
 use App\Repositories\PostRepository;
 use App\Services\PersistenceServiceInMemory;
+use Tests\TestCase;
 
 class PostRepositoryTest extends TestCase
 {
@@ -24,15 +23,14 @@ class PostRepositoryTest extends TestCase
      *
      * @return void
      */
-    public function test_create_a_post()
+    public function testCreateAPost()
     {
-        $data =  \App\Factories\PostFactory::new()->make()->toArray();
+        $data = \App\Factories\PostFactory::new()->make()->toArray();
         unset($data['id']);
 
         $element = $this->repository->create($data);
         unset($element['id']);
         $this->assertEquals($element, $data);
-
     }
 
     /**
@@ -40,17 +38,17 @@ class PostRepositoryTest extends TestCase
      *
      * @return void
      */
-    public function test_get_all_post()
+    public function testGetAllPost()
     {
         $elements = [];
         foreach ($this->itemsFake as $item) {
-            $data =  $item->toArray();
+            $data = $item->toArray();
             unset($data['id']);
 
             $elements[] = $this->repository->create($data);
         }
 
-        $this->assertEquals($elements, array_values( $this->repository->getAll() ));
+        $this->assertEquals($elements, array_values($this->repository->getAll()));
     }
 
     /**
@@ -58,9 +56,9 @@ class PostRepositoryTest extends TestCase
      *
      * @return void
      */
-    public function test_get_a_post()
+    public function testGetAPost()
     {
-        $element = $this->repository->create($this->itemsFake->first()->toArray() );
+        $element = $this->repository->create($this->itemsFake->first()->toArray());
 
         $this->assertEquals($element, $this->repository->get($element['id']));
     }
@@ -70,22 +68,22 @@ class PostRepositoryTest extends TestCase
      *
      * @return void
      */
-    public function test_update_a_post()
+    public function testUpdateAPost()
     {
-        $element = $this->repository->create($this->itemsFake->last()->toArray() );
+        $element = $this->repository->create($this->itemsFake->last()->toArray());
         $element['title'] = 'Nauzet';
 
-        $this->assertEquals($element, $this->repository->update($element['id'], $element) );
+        $this->assertEquals($element, $this->repository->update($element['id'], $element));
     }
 
     /**
-     * A test for not update a post in repository because thow OutOfBoundsException
+     * A test for not update a post in repository because thow OutOfBoundsException.
      *
      * @return void
      */
-    public function test_not_update_a_post()
+    public function testNotUpdateAPost()
     {
-        $element = $this->repository->create($this->itemsFake->last()->toArray() );
+        $element = $this->repository->create($this->itemsFake->last()->toArray());
         $idNoExist = ++$element['id'];
 
         $this->expectException(\OutOfBoundsException::class);
@@ -97,11 +95,11 @@ class PostRepositoryTest extends TestCase
      *
      * @return void
      */
-    public function test_delete_a_post()
+    public function testDeleteAPost()
     {
         $elements = [];
         foreach ($this->itemsFake as $item) {
-            $data =  $item->toArray();
+            $data = $item->toArray();
             unset($data['id']);
 
             $elements[] = $this->repository->create($data);
@@ -111,17 +109,17 @@ class PostRepositoryTest extends TestCase
 
         unset($elements[0]);
 
-        $this->assertEquals(array_values($elements), array_values( $this->repository->getAll() ));
+        $this->assertEquals(array_values($elements), array_values($this->repository->getAll()));
     }
 
     /**
-     * A test for not delete a post in repository because thow OutOfBoundsException
+     * A test for not delete a post in repository because thow OutOfBoundsException.
      *
      * @return void
      */
-    public function test_not_delete_a_element()
+    public function testNotDeleteAElement()
     {
-        $element = $this->repository->create($this->itemsFake->last()->toArray() );
+        $element = $this->repository->create($this->itemsFake->last()->toArray());
         $idNoExist = ++$element['id'];
 
         $this->expectException(\OutOfBoundsException::class);

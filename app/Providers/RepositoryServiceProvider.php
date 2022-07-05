@@ -2,15 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-
+use App\Interfaces\PersistenceServiceInterface;
 use App\Interfaces\PostRepositoryInterface;
 use App\Repositories\PostRepository;
-
-use App\Interfaces\PersistenceServiceInterface;
-use App\Services\PersistenceServiceInMemory;
 use App\Services\PersistenceServiceApi;
-
+use App\Services\PersistenceServiceInMemory;
+use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -21,13 +18,13 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind( PostRepositoryInterface::class, PostRepository::class);
+        $this->app->bind(PostRepositoryInterface::class, PostRepository::class);
 
-        //Para los test, uso el de PersistenceServiceInMemory (esto no haría falta, si consigo usar los Mock en los test)
-        if($this->app->runningUnitTests()) {
-           $this->app->bind( PersistenceServiceInterface::class, PersistenceServiceInMemory::class);
+        // TODO Para los test, uso el de PersistenceServiceInMemory (esto no haría falta, si consigo usar los Mock en los test)
+        if ($this->app->runningUnitTests()) {
+            $this->app->bind(PersistenceServiceInterface::class, PersistenceServiceInMemory::class);
         } else {
-           $this->app->bind( PersistenceServiceInterface::class, PersistenceServiceApi::class);
+            $this->app->bind(PersistenceServiceInterface::class, PersistenceServiceApi::class);
         }
     }
 
@@ -38,6 +35,5 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
     }
 }

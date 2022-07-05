@@ -2,26 +2,24 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Tests\TestCase;
-
-use App\Services\PersistenceServiceApi;
 use App\Repositories\PostRepository;
-
+use App\Services\PersistenceServiceApi;
 use App\Services\PersistenceServiceInMemory;
+use Tests\TestCase;
 
 class ApiPostsWithPersistenceServiceApiTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        //NOTA: Tengo q ver como hacer para q se instancie  PersistenceServiceApi en vez de PersistenceServiceInMemory
+        // NOTA: Tengo q ver como hacer para q se instancie  PersistenceServiceApi en vez de PersistenceServiceInMemory
         // para eso tengo q ver como hacerlo, pero sospecho q  con mockery (pero se me resiste)
 
         $this->persistence = new PersistenceServiceInMemory();
 
         $this->itemsFake = \App\Factories\PostFactory::new()->times(5)->make();
         foreach ($this->itemsFake as $item) {
-            $data =  $item->toArray();
+            $data = $item->toArray();
             unset($data['id']);
 
             $elements[] = $this->persistence->persist($data);
@@ -32,11 +30,11 @@ class ApiPostsWithPersistenceServiceApiTest extends TestCase
         $this->repository = $this->app->make(PostRepository::class);
     }
 
-    public function test_get_all_posts()
+    public function testGetAllPosts()
     {
         $response = $this->get('/api/posts');
         $response->assertStatus(200)
-                 ->assertJsonMissing( ['data' => []]) //No empty collection data
+                 ->assertJsonMissing(['data' => []]) // No empty collection data
                  ->assertJsonStructure([
                     'data' => [
                         '*' => [
@@ -44,14 +42,14 @@ class ApiPostsWithPersistenceServiceApiTest extends TestCase
                              'userId',
                              'title',
                              'body',
-                             'user' ,
-                        ]
-                    ]
+                             'user',
+                        ],
+                    ],
                  ])
                  ;
     }
 
-    public function test_get_a_post()
+    public function testGetAPost()
     {
         $response = $this->get('/api/posts/'.$this->itemFake['id']);
         $response->assertStatus(200)
@@ -61,15 +59,15 @@ class ApiPostsWithPersistenceServiceApiTest extends TestCase
                                 'userId',
                                 'title',
                                 'body',
-                                'user' ,
-                    ]
+                                'user',
+                    ],
                  ])
                  ;
     }
 
-    public function test_post_a_post()
+    public function testPostAPost()
     {
-        $itemFake =  $this->itemFake;
+        $itemFake = $this->itemFake;
         unset($itemFake['id']);
 
         $response = $this->post('/api/posts', $this->itemFake);
@@ -80,10 +78,9 @@ class ApiPostsWithPersistenceServiceApiTest extends TestCase
                                 'userId',
                                 'title',
                                 'body',
-                    ]
+                    ],
                  ])
-                 ->assertJsonFragment( $itemFake )
+                 ->assertJsonFragment($itemFake)
                  ;
     }
-
 }

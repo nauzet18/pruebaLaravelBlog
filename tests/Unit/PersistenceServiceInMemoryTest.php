@@ -2,9 +2,8 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-
 use App\Services\PersistenceServiceInMemory;
+use Tests\TestCase;
 
 class PersistenceServiceInMemoryTest extends TestCase
 {
@@ -21,9 +20,9 @@ class PersistenceServiceInMemoryTest extends TestCase
      *
      * @return void
      */
-    public function test_create_a_element()
+    public function testCreateAElement()
     {
-        $data =  \App\Factories\PostFactory::new()->make()->toArray();
+        $data = \App\Factories\PostFactory::new()->make()->toArray();
         unset($data['id']);
 
         $element = $this->persistence->persist($data);
@@ -36,17 +35,17 @@ class PersistenceServiceInMemoryTest extends TestCase
      *
      * @return void
      */
-    public function test_get_all_element()
+    public function testGetAllElement()
     {
         $elements = [];
         foreach ($this->itemsFake as $item) {
-            $data =  $item->toArray();
+            $data = $item->toArray();
             unset($data['id']);
 
             $elements[] = $this->persistence->persist($data);
         }
 
-        $this->assertEquals($elements, array_values( $this->persistence->all() ));
+        $this->assertEquals($elements, array_values($this->persistence->all()));
     }
 
     /**
@@ -54,35 +53,34 @@ class PersistenceServiceInMemoryTest extends TestCase
      *
      * @return void
      */
-    public function test_get_a_element()
+    public function testGetAElement()
     {
-        $element = $this->persistence->persist($this->itemsFake->first()->toArray() );
+        $element = $this->persistence->persist($this->itemsFake->first()->toArray());
 
         $this->assertEquals($element, $this->persistence->retrieve($element['id']));
     }
-
 
     /**
      * A test for update a element in persistence.
      *
      * @return void
      */
-    public function test_update_a_element()
+    public function testUpdateAElement()
     {
-        $element = $this->persistence->persist($this->itemsFake->last()->toArray() );
+        $element = $this->persistence->persist($this->itemsFake->last()->toArray());
         $element['title'] = 'Nauzet';
 
-        $this->assertEquals($element, $this->persistence->update($element['id'], $element) );
+        $this->assertEquals($element, $this->persistence->update($element['id'], $element));
     }
 
     /**
-     * A test for not update a element in persistence because thow OutOfBoundsException
+     * A test for not update a element in persistence because thow OutOfBoundsException.
      *
      * @return void
      */
-    public function test_not_update_a_element()
+    public function testNotUpdateAElement()
     {
-        $element = $this->persistence->persist($this->itemsFake->last()->toArray() );
+        $element = $this->persistence->persist($this->itemsFake->last()->toArray());
         $idNoExist = ++$element['id'];
 
         $this->expectException(\OutOfBoundsException::class);
@@ -94,11 +92,11 @@ class PersistenceServiceInMemoryTest extends TestCase
      *
      * @return void
      */
-    public function test_delete_a_element()
+    public function testDeleteAElement()
     {
         $elements = [];
         foreach ($this->itemsFake as $item) {
-            $data =  $item->toArray();
+            $data = $item->toArray();
             unset($data['id']);
 
             $elements[] = $this->persistence->persist($data);
@@ -108,17 +106,17 @@ class PersistenceServiceInMemoryTest extends TestCase
 
         unset($elements[0]);
 
-        $this->assertEquals(array_values($elements), array_values( $this->persistence->all() ));
+        $this->assertEquals(array_values($elements), array_values($this->persistence->all()));
     }
 
     /**
-     * A test for not delete a element in persistence because thow OutOfBoundsException
+     * A test for not delete a element in persistence because thow OutOfBoundsException.
      *
      * @return void
      */
-    public function test_not_delete_a_element()
+    public function testNotDeleteAElement()
     {
-        $element = $this->persistence->persist($this->itemsFake->last()->toArray() );
+        $element = $this->persistence->persist($this->itemsFake->last()->toArray());
         $idNoExist = ++$element['id'];
 
         $this->expectException(\OutOfBoundsException::class);

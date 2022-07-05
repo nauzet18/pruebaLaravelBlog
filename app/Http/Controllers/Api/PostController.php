@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\Http\Requests\PostRequest;
-use App\Interfaces\PostRepositoryInterface;
-use App\Http\Resources\PostResource;
 use App\Http\Resources\PostCollection;
+use App\Http\Resources\PostResource;
+use App\Interfaces\PostRepositoryInterface;
 
 /**
  * @OA\Info(
@@ -29,7 +27,6 @@ use App\Http\Resources\PostCollection;
  *     )
  * )
  */
-
 class PostController extends Controller
 {
     private PostRepositoryInterface $postRepository;
@@ -68,7 +65,6 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\PostRequest  $request
      * @return \Illuminate\Http\Response
      *
      * @OA\Post(
@@ -113,7 +109,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $post = $this->postRepository->create( $request->all() );
+        $post = $this->postRepository->create($request->all());
 
         return new PostResource($post);
     }
@@ -121,7 +117,8 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      *
      * @OA\Get(
@@ -158,8 +155,8 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\PostRequest  $request
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      *
      * @OA\Put(
@@ -210,7 +207,6 @@ class PostController extends Controller
      *         description="Ha ocurrido un error."
      *     )
      * )
-     *
      */
     public function update(PostRequest $request, $id)
     {
@@ -220,7 +216,8 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

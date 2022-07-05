@@ -2,59 +2,43 @@
 
 namespace App\Interfaces;
 
-use App\Http\Requests\PostRequest;
-
 interface PostRepositoryInterface
 {
     /**
-     * Get all posts
+     * Get all posts.
      *
-     * @param   integer     $perPage ?
-     * @param   integer     $page ?
+     * @param int $perPage ?
+     * @param int $page    ?
      *
      * @method  GET api/posts
-     * @access  public
      */
-     public function getAll(int $perPage = null,int $page = null): array;
+    public function getAll(int $perPage = null, int $page = null): array;
 
     /**
-     * Get Post By ID
-     *
-     * @param   integer     $id
+     * Get Post By ID.
      *
      * @method  GET api/posts/{id}
-     * @access  public
      */
     public function get(int $id): array;
 
     /**
-     * Create
-     *
-     * @param   array    $data
+     * Create.
      *
      * @method  POST    api/posts       For Create
-     * @access  public
      */
     public function create(array $data): array;
 
     /**
-     * Update post
-     *
-     * @param   integer  $id
-     * @param   array    $data
+     * Update post.
      *
      * @method  PUT     api/posts/{id}  For Update
-     * @access  public
      */
     public function update(int $id, array $data);
 
     /**
-     * Delete post
-     *
-     * @param   integer     $id
+     * Delete post.
      *
      * @method  DELETE  api/posts/{id}
-     * @access  public
      */
     public function delete(int $id);
 }

@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
-use OutOfBoundsException;
-use Illuminate\Support\Facades\Http;
-
 use App\Interfaces\PersistenceServiceInterface;
+use Illuminate\Support\Facades\Http;
+use OutOfBoundsException;
 
 class PersistenceServiceApi implements PersistenceServiceInterface
 {
@@ -49,19 +48,20 @@ class PersistenceServiceApi implements PersistenceServiceInterface
         $response = Http::get($this->urlBase.'/posts/'.$id);
 
         $element = $response->json();
-        if(empty($element))
+        if (empty($element)) {
             throw new \OutOfBoundsException("No post found for ID  $id");
+        }
 
         return $element;
     }
 
     public function update(int $id, array $data): array
     {
-        throw new \Exception("No implemented");
+        throw new \Exception('No implemented');
     }
 
     public function delete(int $id)
     {
-        throw new \Exception("No implemented");
+        throw new \Exception('No implemented');
     }
 }

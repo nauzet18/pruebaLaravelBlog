@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use OutOfBoundsException;
 use App\Interfaces\PersistenceServiceInterface;
+use OutOfBoundsException;
 
 class PersistenceServiceInMemory implements PersistenceServiceInterface
 {
@@ -12,21 +12,22 @@ class PersistenceServiceInMemory implements PersistenceServiceInterface
 
     private function generateId(): int
     {
-        $this->lastId++;
+        ++$this->lastId;
 
         return $this->lastId;
     }
 
     public function getUser($id): array
     {
-        $item = collect($this->data)->first(function ($item, $key) use($id) {
-            return $item['userId']== $id;
+        $item = collect($this->data)->first(function ($item, $key) use ($id) {
+            return $item['userId'] == $id;
         });
 
-        if( isset($item['user']))
+        if (isset($item['user'])) {
             $user = $item['user'];
-        else
+        } else {
             $user = null;
+        }
 
         if (empty($user)) {
             throw new OutOfBoundsException("No user data found for ID  $id");
