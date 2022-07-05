@@ -1,63 +1,44 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  Prueba técnica Blog aplimentado desde una API y proporciona una API para su consumo
 </p>
 
-## About Laravel
+## Sobre la prueba
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## PHP CS Fixer en modo @Symfony
+He configurado PHP CS Fixer como proponía la documentación, lo puse en la carpeta tools, al fianl lo commitee, para evitar problemas para q lo pruebe un tercero, pero yo opino que debería estar en vendor.
+He configurado con .php-cs-fixer.php el modo @Symfony y las carpetas a excluir, seguro q me he dejado alguna.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Para tener los comandos guardados.
+Ejecutar php-cs-fixer y que muestre los ficheros que se modificarián, sin llegar a modificarlo
+docker-compose exec -u1000 app tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --dry-run
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Ejecutar php-cs-fixer y que cambie los ficheros según las reglas.
+docker-compose exec -u1000 app tools/php-cs-fixer/vendor/bin/php-cs-fixer fix
 
-## Learning Laravel
+**TODO:** Estuve jugando con él al principio, pero luego el tiempo se me hechó encima... esto se queda para el futuro.
+**AVISO:** Al final me lié y me puse a revisar y subir los cambios q me hizo, los test dice q todo OK.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Phpstan
+He instalado phpstan y lo he configurado en phpstan.neon
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Para tener guardado el comando para lanzar phpstan, en phpstan.neon esta la condiguración
+docker-compose exec -u1000 app vendor/bin/phpstan analyse
 
-## Laravel Sponsors
+**TODO:** Estuve jugando con él al principio, pero luego el tiempo se me hechó encima, a ver si tengo tiempo y corrijo algunas partes. Mi yo de las 3 de la mañana... nop... esto se queda para el futuro.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Swagger
+He instalado swagger y he configurado para q se genere la documentación, lo tienen disponible en el siguiente enlace: [Api documentación de swagger](http://localhost/api/documentation)
 
-### Premium Partners
+Para tener guardado el comando de generación de la documentación
+docker-compose exec -u1000 app php artisan l5-swagger:generate
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Implementado
 
-## Contributing
+## Mejoras
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Tiempo dedicado
 
 ## License
 
