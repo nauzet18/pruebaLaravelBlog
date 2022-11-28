@@ -6,7 +6,7 @@
 
 ## Sobre la prueba
 
-En esta prueba se ha pedido a groso modo hacer un blog que muestre el daoto en modo web con una vista donde listar todos los post y una vista para mostrar un post.
+En esta prueba se ha pedido a groso modo hacer un blog que muestre el dato en modo web con una vista donde listar todos los post y una vista para mostrar un post.
 Además se pide que se exponga una API para consumir los post y para poder hacer un create.
 
 ## Implementado
