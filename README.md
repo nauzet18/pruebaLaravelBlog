@@ -47,33 +47,51 @@ Copiar y adaptar el .env de docker-compose. Especial interes en ENV_UID_USER y E
 
 **cp .env_example .env**
 
+**NOTA:** los comandos están puesto para la versión anterior de docker-compose y ahora en la versión 2, es un comando q está dentro de docker y esto sería la segunda lía
+
 0º Pues a contruir y a levantar
 
 **docker-compose build**
 
+**docker compose build**
+
 **docker-compose up**
+
+**docker compose up**
 
 1º Instalar los paquetes de composer
 
 **docker-compose exec -u1000 app composer install**
 
+**docker compose exec -u1000 app composer install**
+
 2º generar el app key
 
 **docker-compose exec -u1000 app php artisan key:generate**
+
+**docker compose exec -u1000 app php artisan key:generate**
 
 3º Ejecutar migraciones y seeders (No lo uso al final)
 
 **docker-compose exec -u1000 app php artisan migrate**
 
+**docker compose exec -u1000 app php artisan migrate**
+
 **docker-compose exec -u1000 app php artisan db:seed**
+
+**docker compose exec -u1000 app php artisan db:seed**
 
 4º crear el link a la carpeta storage
 
 **docker-compose exec -u1000 app php artisan storage:link**
 
+**docker compose exec -u1000 app php artisan storage:link**
+
 5º Instalar paquetes de nodemodules
 
 **docker-compose run --rm -u1000 nodejs npm install**
+
+**docker compose run --rm -u1000 nodejs npm install**
 
 ** Listo, ya puedes entrar en la web **
 
